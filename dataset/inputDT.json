@@ -1,0 +1,19 @@
+{
+	"name": "inputDT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "inputfolderLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "input",
+				"container": "asthacontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
