@@ -1,18 +1,28 @@
 {
-	"name": "outputDS",
+	"name": "multioutputDS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "inputfolderLS",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "output",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": "multifile",
 				"container": "asthacontainer"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

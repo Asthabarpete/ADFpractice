@@ -1,9 +1,9 @@
 {
-	"name": "getFilename_Dynamically",
+	"name": "delete_file",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get filename",
+				"name": "Get  all file",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "inputDT",
+						"referenceName": "outputDS",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -24,7 +24,10 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
+						"modifiedDatetimeEnd": {
+							"value": "@adddays(utcnow(),-2)",
+							"type": "Expression"
+						},
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -33,11 +36,11 @@
 				}
 			},
 			{
-				"name": "ForEachfile",
+				"name": "loopfile",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get filename",
+						"activity": "Get  all file",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -46,14 +49,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get filename').output.childItems",
+						"value": "@activity('Get  all file').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy file",
-							"type": "Copy",
+							"name": "Delete file",
+							"type": "Delete",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -64,27 +67,8 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "BinarySource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true
-									},
-									"formatSettings": {
-										"type": "BinaryReadSettings"
-									}
-								},
-								"sink": {
-									"type": "BinarySink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									}
-								},
-								"enableStaging": false
-							},
-							"inputs": [
-								{
-									"referenceName": "inputDSmultifile",
+								"dataset": {
+									"referenceName": "dsoutput",
 									"type": "DatasetReference",
 									"parameters": {
 										"filename": {
@@ -92,27 +76,25 @@
 											"type": "Expression"
 										}
 									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "multioutputDS",
-									"type": "DatasetReference",
-									"parameters": {
-										"filename": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
+								},
+								"logStorageSettings": {
+									"linkedServiceName": {
+										"referenceName": "inputfolderLS",
+										"type": "LinkedServiceReference"
 									}
+								},
+								"enableLogging": true,
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
 								}
-							]
+							}
 						}
 					]
 				}
 			}
 		],
-		"annotations": [],
-		"lastPublishTime": "2023-12-12T12:35:26Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }
