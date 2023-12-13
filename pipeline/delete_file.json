@@ -55,7 +55,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Delete1",
+							"name": "Delete file",
 							"type": "Delete",
 							"dependsOn": [],
 							"policy": {
