@@ -68,7 +68,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "outputDS",
+									"referenceName": "dsoutput",
 									"type": "DatasetReference"
 								},
 								"enableLogging": true,
