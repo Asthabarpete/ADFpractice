@@ -62,7 +62,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "outputDS",
+								"referenceName": "multioutputDS",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "employee.txt"
@@ -78,7 +78,119 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/employeeDS')]",
-				"[concat(variables('factoryId'), '/datasets/outputDS')]"
+				"[concat(variables('factoryId'), '/datasets/multioutputDS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/delete_file')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get  all file",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "outputDS",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"modifiedDatetimeEnd": {
+									"value": "@adddays(utcnow(),-2)",
+									"type": "Expression"
+								},
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "BinaryReadSettings"
+							}
+						}
+					},
+					{
+						"name": "loopfile",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get  all file",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get  all file').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Delete file",
+									"type": "Delete",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "dsoutput",
+											"type": "DatasetReference",
+											"parameters": {
+												"filename": {
+													"value": "@item().name",
+													"type": "Expression"
+												}
+											}
+										},
+										"logStorageSettings": {
+											"linkedServiceName": {
+												"referenceName": "inputfolderLS",
+												"type": "LinkedServiceReference"
+											}
+										},
+										"enableLogging": true,
+										"storeSettings": {
+											"type": "AzureBlobStorageReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/outputDS')]",
+				"[concat(variables('factoryId'), '/datasets/dsoutput')]",
+				"[concat(variables('factoryId'), '/linkedServices/inputfolderLS')]"
 			]
 		},
 		{
@@ -182,7 +294,7 @@
 									],
 									"outputs": [
 										{
-											"referenceName": "outputDS",
+											"referenceName": "multioutputDS",
 											"type": "DatasetReference",
 											"parameters": {
 												"filename": {
@@ -206,7 +318,39 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/inputDT')]",
 				"[concat(variables('factoryId'), '/datasets/inputDSmultifile')]",
-				"[concat(variables('factoryId'), '/datasets/outputDS')]"
+				"[concat(variables('factoryId'), '/datasets/multioutputDS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsoutput')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "inputfolderLS",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": "output",
+						"container": "asthacontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/inputfolderLS')]"
 			]
 		},
 		{
@@ -289,7 +433,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/outputDS')]",
+			"name": "[concat(parameters('factoryName'), '/multioutputDS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -312,6 +456,29 @@
 							"type": "Expression"
 						},
 						"folderPath": "multifile",
+						"container": "asthacontainer"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/inputfolderLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/outputDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "inputfolderLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
 						"container": "asthacontainer"
 					}
 				}
