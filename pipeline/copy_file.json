@@ -41,7 +41,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "outputDS",
+						"referenceName": "multioutputDS",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "employee.txt"

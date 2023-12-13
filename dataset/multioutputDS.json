@@ -1,5 +1,5 @@
 {
-	"name": "outputDS",
+	"name": "multioutputDS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "inputfolderLS",
