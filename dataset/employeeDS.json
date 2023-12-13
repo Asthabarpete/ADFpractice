@@ -1,0 +1,19 @@
+{
+	"name": "employeeDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "inputfolderLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "employee_copy.txt",
+				"folderPath": "input",
+				"container": "asthacontainer"
+			}
+		}
+	}
+}
