@@ -5,9 +5,9 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"linkedService": {
-						"referenceName": "inputfolderLS",
-						"type": "LinkedServiceReference"
+					"dataset": {
+						"referenceName": "employeedelimeterDS",
+						"type": "DatasetReference"
 					},
 					"name": "employeefile"
 				}
@@ -40,18 +40,9 @@
 				"          MANAGER_ID as short,",
 				"          DEPARTMENT_ID as short",
 				"     ),",
-				"     useSchema: false,",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'delimited',",
-				"     container: 'asthacontainer',",
-				"     folderPath: 'input',",
-				"     fileName: 'employee_copy.txt',",
-				"     columnDelimiter: ',',",
-				"     escapeChar: '\\\\',",
-				"     quoteChar: '\\\"',",
-				"     columnNamesAsHeader: true,",
 				"     partitionBy('hash', 1)) ~> employeefile",
 				"employeefile sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",

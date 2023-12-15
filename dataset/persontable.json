@@ -1,5 +1,5 @@
 {
-	"name": "SqlServerTable1",
+	"name": "persontable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SqlServer1",
@@ -9,54 +9,33 @@
 		"type": "SqlServerTable",
 		"schema": [
 			{
-				"name": "EMPLOYEE_ID",
+				"name": "id",
 				"type": "varchar"
 			},
 			{
-				"name": "FIRST_NAME",
+				"name": "first_name",
 				"type": "varchar"
 			},
 			{
-				"name": "LAST_NAME",
+				"name": "last_name",
 				"type": "varchar"
 			},
 			{
-				"name": "EMAIL",
+				"name": "email",
 				"type": "varchar"
 			},
 			{
-				"name": "PHONE_NUMBER",
+				"name": "gender",
 				"type": "varchar"
 			},
 			{
-				"name": "HIRE_DATE",
-				"type": "varchar"
-			},
-			{
-				"name": "JOB_ID",
-				"type": "varchar"
-			},
-			{
-				"name": "SALARY",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "COMMISSION_PCT",
-				"type": "varchar"
-			},
-			{
-				"name": "MANAGER_ID",
-				"type": "varchar"
-			},
-			{
-				"name": "DEPARTMENT_ID",
+				"name": "ip_address",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "employees"
+			"table": "person"
 		}
 	}
 }
