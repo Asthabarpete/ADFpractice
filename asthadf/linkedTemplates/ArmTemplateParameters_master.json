@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "asthadf"
 		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
 		"inputfolderLS_connectionString": {
 			"value": ""
 		},

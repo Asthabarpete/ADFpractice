@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "asthadf"
 		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
+		},
 		"inputfolderLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'inputfolderLS'"
@@ -40,6 +44,9 @@
 					},
 					"inputfolderLS_connectionString": {
 						"value": "[parameters('inputfolderLS_connectionString')]"
+					},
+					"SqlServer1_connectionString": {
+						"value": "[parameters('SqlServer1_connectionString')]"
 					}
 				}
 			},
