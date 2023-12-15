@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SqlServerTable1",
+						"referenceName": "Employeetable",
 						"type": "DatasetReference"
 					},
 					"name": "sqlserver",
