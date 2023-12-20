@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "asthadf"
 		},
+		"FileServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FileServer1'"
+		},
 		"SqlServer1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
@@ -14,6 +18,14 @@
 		"inputfolderLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'inputfolderLS'"
+		},
+		"FileServer1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "D:\\"
+		},
+		"FileServer1_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "NewVisionsoftpu\\astha.barpete"
 		},
 		"containerUri": {
 			"type": "string",
@@ -45,8 +57,17 @@
 					"inputfolderLS_connectionString": {
 						"value": "[parameters('inputfolderLS_connectionString')]"
 					},
+					"FileServer1_password": {
+						"value": "[parameters('FileServer1_password')]"
+					},
 					"SqlServer1_connectionString": {
 						"value": "[parameters('SqlServer1_connectionString')]"
+					},
+					"FileServer1_properties_typeProperties_host": {
+						"value": "[parameters('FileServer1_properties_typeProperties_host')]"
+					},
+					"FileServer1_properties_typeProperties_userId": {
+						"value": "[parameters('FileServer1_properties_typeProperties_userId')]"
 					}
 				}
 			},

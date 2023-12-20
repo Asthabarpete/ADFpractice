@@ -5,11 +5,20 @@
 		"factoryName": {
 			"value": "asthadf"
 		},
+		"FileServer1_password": {
+			"value": ""
+		},
 		"SqlServer1_connectionString": {
 			"value": ""
 		},
 		"inputfolderLS_connectionString": {
 			"value": ""
+		},
+		"FileServer1_properties_typeProperties_host": {
+			"value": "D:\\"
+		},
+		"FileServer1_properties_typeProperties_userId": {
+			"value": "NewVisionsoftpu\\astha.barpete"
 		},
 		"containerUri": {
 			"value": ""
